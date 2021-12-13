@@ -19,6 +19,7 @@ class Grid {
         void set_cell(int i, int j, bool is_alive);
         void update();
         void prev_state();
+        void clear();
         ~Grid();
 };
 

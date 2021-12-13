@@ -51,6 +51,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         grid.update();
     } else if (key == GLFW_KEY_P && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
         grid.prev_state();
+    } else if (key == GLFW_KEY_C && (action == GLFW_PRESS)) {
+        grid.clear();
     }
 }
 
