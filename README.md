@@ -50,6 +50,38 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 - `std::vector<bool*> prev_states`
     - vector storing all previous states of the grid
 
+## Display functions ##
+- `enum Color`
+    - An enum to allow easy referral to the three colors used in the program
+
+- `select_color(Color color)`
+    - Sets the current openGL color to the appropriate color as specified by the color paramater.
+
+- `void fill_cell(int row, int col, Color color)`
+    - Fill the cell at (row, col) with color.
+
+- `void draw_lines()`
+    - Draw the grid lines.
+
+- `void display_grid()`
+    - Display the grid.
+
+
+## Key Callbacks ##
+- `static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)`
+    - A function that is called by glfw every when it polls for events. This method implements the appropriate actions to be taken for each relevant key press.
+
+- `static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)`
+    - A function that is called by glfw every time there is a mouse button press event. This method toggles the state of the cell that is underneath the mouse.
+
+
+## Main Game loop ##
+- To use glfw and openGL we first must initialize glfw and make a current openGL context.
+- We make the appropriate calls to glfw to set the callbacks with: `glfwSetKeyCallback` and `glfwSetMouseButtonCallback`
+- In the event loop, we first create the next frame by calling `glfwPollEvents` and updating the grid if `play == true` and a `time_step` has elapsed.
+- Finally, we call `glfwSwapBuffers` to swap the back and front buffers, thereby displaying the frame we have just drawn on.
+
+
 # Use
 <img src="glider-gun.gif" width="300" alt="A Gosper glider gun" align="left" style="margin-right: 40px;">
 
