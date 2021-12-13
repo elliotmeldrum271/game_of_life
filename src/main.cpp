@@ -8,7 +8,7 @@
 // Define some global variables
 Grid grid = Grid();
 
-const int BUF_SIZE = 5;
+const int BUF_SIZE = 5; // Add a buffer of BUF_SIZE around the grid so the edges of the grid are off screen.
 
 const double ROW_WIDTH = 2.0 / (NUM_ROWS-2*BUF_SIZE);
 const double COL_WIDTH = 2.0 / (NUM_COLS-2*BUF_SIZE);
@@ -58,10 +58,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     }
 }
 
-
-// A callback function to get the cursor location.
-static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-}
 
 
 // Toggle the state of a cell when it is clicked.
@@ -153,7 +149,6 @@ int main() {
 
     // Make glfw listen to the appropriate keys.
     glfwSetKeyCallback(window, key_callback);
-    glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     double prev_time = 0;
