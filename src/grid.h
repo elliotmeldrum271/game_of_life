@@ -8,10 +8,10 @@ const int NUM_COLS = 100;
 class Grid {
     private:
         bool* bit_array;
-        void set_cell(int i, int j, bool is_alive);
     public:
         Grid();
-        bool get_cell_at(int i, int j);
+        bool get_cell(int i, int j);
+        void set_cell(int i, int j, bool is_alive);
         void update();
         ~Grid();
 };
