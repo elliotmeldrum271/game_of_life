@@ -9,18 +9,18 @@ Grid::Grid() {
 }
 
 
-void Grid::set_cell(int i, int j, bool is_alive) {
-    // Set value at (i, j) to is_alive
-    bit_array[i*NUM_COLS + j] = is_alive;
+void Grid::set_cell(int row, int col, bool is_alive) {
+    // Set value at (row, col) to is_alive
+    bit_array[row*NUM_COLS + col] = is_alive;
 }
 
-bool Grid::get_cell(int i, int j) {
-    // Return value at (i, j)
-    return bit_array[i*NUM_COLS + j];
+bool Grid::get_cell(int row, int col) {
+    // Return value at (row, col)
+    return bit_array[row*NUM_COLS + col];
 }
 
 bool Grid::in_bounds(int row, int col) {
-    // Return true if (row, cell) is in bounds
+    // Return true if (row, col) is in bounds
     return (row >= 0 && row < NUM_ROWS && col >= 0 && col < NUM_COLS);
 }
 
