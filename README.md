@@ -1,4 +1,4 @@
-# Conway's Game of Life written in c++ #
+# Conway's Game of Life #
 
 
 ## To build and run the Game of Life ##
