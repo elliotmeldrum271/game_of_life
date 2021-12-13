@@ -51,6 +51,10 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         play = !play;
     } else if (key == GLFW_KEY_N && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
         grid.update();
+    } else if (key == GLFW_KEY_P && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        grid.prev_state();
+    } else if (key == GLFW_KEY_C && (action == GLFW_PRESS)) {
+        grid.clear();
     }
 }
 
@@ -161,7 +165,9 @@ int main() {
     std::cout << "Press the space bar to toggle the flow of time." << std::endl;
     std::cout << "Press the up arrow (or k or w) to double the rate of time." << std::endl;
     std::cout << "Press the down arrow (or j or s) to half the rate of time." << std::endl;
-    std::cout << "Press the n key to move increment the time step by one." << std::endl;
+    std::cout << "Press the n key to increment the time step by one." << std::endl;
+    std::cout << "Press the p key to decrement the time step by one." << std::endl;
+    std::cout << "Press the c key to clear the grid." << std::endl;
     std::cout << "Press the escape key to exit the program." << std::endl;
 
     // Event loop

@@ -1,14 +1,11 @@
 #include <iostream>
 #include "grid.h"
+#include <vector>
 
 
 Grid::Grid() {
     bit_array = new bool[NUM_ROWS * NUM_COLS];
-    for (int i = 0; i < NUM_ROWS; i++) {
-        for (int j = 0; j < NUM_COLS; j++) {
-            set_cell(i, j, false);
-        }
-    }
+    clear();
 }
 
 
@@ -76,12 +73,28 @@ void Grid::update() {
         }
     }
 
+    // Store previous state in prev_states vector
+    prev_states.push_back(bit_array);
     // Update the bit array
-    bool* old_bit_array = bit_array;
     bit_array = updated_bit_array;
-    delete[] old_bit_array;  
 }
 
+void Grid::prev_state() {
+    // Make sure there is history to rewind to
+    if(prev_states.size() > 0) {
+        // Rewind one step and delete entry in vector
+        bit_array = prev_states[prev_states.size() - 1];
+        prev_states.pop_back();
+    }
+}
+
+void Grid::clear() {
+    for (int i = 0; i < NUM_ROWS; i++) {
+        for (int j = 0; j < NUM_COLS; j++) {
+            set_cell(i, j, false);
+        }
+    }
+}
 
 Grid::~Grid() {
     delete[] bit_array;
