@@ -166,6 +166,8 @@ int main() {
     std::cout << "Press the n key to increment the time step by one." << std::endl;
     std::cout << "Press the p key to decrement the time step by one." << std::endl;
     std::cout << "Press the c key to clear the grid." << std::endl;
+	std::cout << "Press the u key to increase the probability of a cell randomly coming to life" << std::endl;
+	std::cout << "Press the d key to decrease the probabiliyt of spontaneous birth." << std::endl;
     std::cout << "Press the escape key to exit the program." << std::endl;
 
     // Event loop
