@@ -3,11 +3,10 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <stdlib.h>
 #include "grid.h"
 
-const int WINDOW_WIDTH = 700;
-const int WINDOW_HEIGHT = 500;
+// Define some global variables
+Grid grid = Grid();
 
 const double ROW_WIDTH = 2.0 / NUM_ROWS;
 const double COL_WIDTH = 2.0 / NUM_COLS;
@@ -15,48 +14,68 @@ const double COL_WIDTH = 2.0 / NUM_COLS;
 static double time_step = 0.1;
 static bool play = false;
 
-static int row = 0;
-static int col = 0;
-
-enum Color{BLACK, RED, GREEN, BLUE, WHITE};
-
-Color ALIVE_COLOR = BLUE;
-Color DEAD_COLOR = BLACK;
+enum Color{BLACK, BLUE, GREY};
+const Color ALIVE_COLOR = BLUE;
+const Color DEAD_COLOR = BLACK;
 
 
+
+// Set the current openGL color to the appropriate 
+// color as specified by the color paramater.
 void select_color(Color color) {
     switch (color) {
         case BLACK:
             glColor3f(0, 0, 0);
             break;
-        case RED:
-            glColor3f(1, 0, 0);
-            break;
-        case GREEN:
-            glColor3f(0, 1, 0);
-            break;
         case BLUE:
             glColor3f(0, 0, 1);
             break;
-        case WHITE:
-            glColor3f(1, 1, 1);
+        case GREY:
+            glColor3f(0.3, 0.3, 0.3);
             break;
     }
 }
 
 
+// Do the appropriate action when certain keys are pressed.
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-    else if ((key == GLFW_KEY_UP || key == GLFW_KEY_W || key == GLFW_KEY_K) && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+    } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_W || key == GLFW_KEY_K) && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
         time_step /= 2;
-    }
-    else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_S || key == GLFW_KEY_J) && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+    } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_S || key == GLFW_KEY_J) && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
         time_step *= 2;
-    }
-    else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    } else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         play = !play;
+    } else if (key == GLFW_KEY_N && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        grid.update();
+    }
+}
+
+
+// A callback function to get the cursor location.
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+}
+
+
+// Toggle the state of a cell when it is clicked.
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+                int window_width, window_height;
+        glfwGetWindowSize(window, &window_width, &window_height);
+        int pixels_per_col = window_width /  NUM_COLS;
+        int pixels_per_row = window_height / NUM_ROWS;
+
+        // x_pos is the number of pixels from the left
+        // y_pos is the number of pixels from the top
+        double x_pos, y_pos;
+        glfwGetCursorPos(window, &x_pos, &y_pos);
+
+        int row = y_pos / pixels_per_row;
+        int col = x_pos / pixels_per_col;
+        bool prev_state = grid.get_cell(row, col);
+        grid.set_cell(row, col, !prev_state);
     }
 }
 
@@ -77,36 +96,24 @@ void fill_cell(int row, int col, Color color) {
 }
 
 
-// Fill the cell at (row, col) using the color defined by the red, green and blue paramaters 
-void fill_cell(int row, int col, double red, double green, double blue) {
-    double x_left = col * COL_WIDTH - 1;
-    double x_right = (col + 1) * COL_WIDTH - 1;
-    double y_top = - (row * ROW_WIDTH - 1);
-    double y_bottom = - ((row + 1) * ROW_WIDTH - 1);
-    glColor3f(red, green, blue);
-    glBegin(GL_POLYGON);
-        glVertex2d(x_left, y_top);
-        glVertex2d(x_left, y_bottom);
-        glVertex2d(x_right, y_bottom);
-        glVertex2d(x_right, y_top);
-    glEnd();
-}
-
-
+// Draw the grid lines.
 void draw_lines() {
-    glColor3f(0.3, 0.3, 0.3);
+    select_color(GREY);
         glBegin(GL_LINES);
-        // vertical lines
-        for (double i = -1; i <= 1; i += COL_WIDTH) { glVertex2d(i, 1); glVertex2d(i, -1); }
-        // horizontal lines
-        for (double j = -1; j <= 1; j += ROW_WIDTH) { glVertex2d(1, j); glVertex2d(-1, j); }
+        // Draw the vertical lines.
+        for (double i = -1; i <= 1; i += COL_WIDTH) {
+            glVertex2d(i, 1); glVertex2d(i, -1);
+        }
+        // Draw the horizontal lines.
+        for (double j = -1; j <= 1; j += ROW_WIDTH) {
+            glVertex2d(1, j); glVertex2d(-1, j);
+        }
     glEnd();
 }
 
 
 // Display the grid.
 void display_grid(Grid& grid) {
-    // bool* bit_array = grid.get_bit_array();
     Color color;
     bool is_alive;
     for (int i = 0; i < NUM_ROWS; i++) {
@@ -120,43 +127,54 @@ void display_grid(Grid& grid) {
 }
 
 
+// Run the Game of Life.
 int main() {
-    // Initialize the window.
-    if (!glfwInit()) { return -1; }
-    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game Of Life", NULL, NULL);
+    // Initialize glfw.
+    if (!glfwInit()) {
+        std::cout << "Failed to initialize glfw. Program exiting." << std::endl;
+        return -1;
+    }
+    int window_width = 500;
+    int window_height = 500;
+    GLFWwindow* window = glfwCreateWindow(window_width, window_height, "Game Of Life", NULL, NULL);
     if (!window) {
+        std::cout << "Failed to create window. Program exiting." << std::endl;
         glfwTerminate();
         return -1;
     }
-
-    glfwSetKeyCallback(window, key_callback);
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(0);
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Make glfw listen to the appropriate keys.
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     double prev_time = 0;
     double cur_time;
-    Grid grid = Grid();
 
-    // game loop
+    // Print instructions
+    std::cout << "Welcome to Conway's Game of Life." << std::endl;
+    std::cout << "Click on a square to toggle it's state." << std::endl;
+    std::cout << "Press the space bar to toggle the flow of time." << std::endl;
+    std::cout << "Press the up arrow (or k or w) to double the rate of time." << std::endl;
+    std::cout << "Press the down arrow (or j or s) to half the rate of time." << std::endl;
+    std::cout << "Press the n key to move increment the time step by one." << std::endl;
+    std::cout << "Press the escape key to exit the program." << std::endl;
+
+    // Event loop
     while (!glfwWindowShouldClose(window)) {
-
-        // create the next frame
+        // Create the next frame
         glClear(GL_COLOR_BUFFER_BIT);
-        glfwPollEvents();
-
         cur_time = glfwGetTime();
         if (cur_time > prev_time + time_step) {
             prev_time = cur_time;
-            if (play) {
-                grid.update();
-            }
+            if (play) { grid.update(); }
         }
-
-        // render the next frame
+        glfwPollEvents();
         display_grid(grid);
         draw_lines();
+
+        // Display the next frame
         glfwSwapBuffers(window);
     }
 
