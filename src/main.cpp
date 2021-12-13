@@ -156,8 +156,8 @@ int main() {
     std::cout << "Welcome to Conway's Game of Life." << std::endl;
     std::cout << "Click on a square to toggle it's state." << std::endl;
     std::cout << "Press the space bar to toggle the flow of time." << std::endl;
-    std::cout << "Press the up arrow (or j or w) to double the rate of time." << std::endl;
-    std::cout << "Press the down arrow (or k or s) to half the rate of time." << std::endl;
+    std::cout << "Press the up arrow (or k or w) to double the rate of time." << std::endl;
+    std::cout << "Press the down arrow (or j or s) to half the rate of time." << std::endl;
     std::cout << "Press the n key to move increment the time step by one." << std::endl;
     std::cout << "Press the escape key to exit the program." << std::endl;
 
