@@ -81,6 +81,8 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 - In the event loop, we first create the next frame by calling `glfwPollEvents` and updating the grid if `play == true` and a `time_step` has elapsed.
 - Finally, we call `glfwSwapBuffers` to swap the back and front buffers, thereby displaying the frame we have just drawn on.
 
+## Future improvements ##
+- We can improve this project by enabling zooming and panning of the grid to simulate an an infinite environment.
 
 # Use
 <img src="glider-gun.gif" width="300" alt="A Gosper glider gun" align="left" style="margin-right: 40px;">
