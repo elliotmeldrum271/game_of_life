@@ -19,8 +19,11 @@ From a command prompt in the `game_of_life` directory, run the following command
 4. `make all`
 5. `./game_of_life`
 
-
-
+To build project using VS Code, navigate to the `game_of_life` directory:
+1. From a command prompt, run `code .`
+2. Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> to open the Extensions panel.
+3. Ensure that CMake Tools by Microsoft is installed. (ms-vscode.cmake-tools)
+4. Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and type `cmake build`
 
 ### Acknowledgements ###
 - Ths project was started using the template found at https://github.com/juliettef/GLFW-CMake-starter.
