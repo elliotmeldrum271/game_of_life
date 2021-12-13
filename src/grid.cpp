@@ -77,13 +77,16 @@ void Grid::update() {
         }
     }
 
-    // Update the bit array
+    // Store previous state in prev_states vector
     prev_states.push_back(bit_array);
+    // Update the bit array
     bit_array = updated_bit_array;
 }
 
 void Grid::prev_state() {
+    // Make sure there is history to rewind to
     if(prev_states.size() > 0) {
+        // Rewind one step and delete entry in vector
         bit_array = prev_states[prev_states.size() - 1];
         prev_states.pop_back();
     }
