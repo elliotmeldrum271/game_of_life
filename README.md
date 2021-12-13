@@ -25,8 +25,8 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 3. Ensure that CMake Tools by Microsoft is installed. (ms-vscode.cmake-tools)
 4. Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and type `cmake build`
 
-# grid.h
-## Public methods
+# grid.cpp
+## Public functions
 - `bool get_cell(int row, int col)`
     - returns true if there is a live cell at (row, col)
 - `void set_cell(int row, int col, bool is_alive)`
@@ -38,7 +38,7 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 - `void clear()`
     - clears the board of any live cells
 
-## Private methods
+## Private functions
 - `int count_neighbors(int row, col)`
     - returns the number cells that are alive and adjacent to (row, col)
 - `bool in_bounds(int row, col)`
@@ -50,6 +50,7 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 - `std::vector<bool*> prev_states`
     - vector storing all previous states of the grid
 
+# main.cpp
 ## Display functions ##
 - `enum Color`
     - An enum to allow easy referral to the three colors used in the program
@@ -83,12 +84,12 @@ To build project using VS Code, navigate to the `game_of_life` directory:
 
 
 # Use
-<img src="glider-gun.gif" width="300" alt="A Gosper glider gun" align="left" style="margin-right: 40px;">
+<img src="glider-gun.gif" width="300" alt="A Gosper glider gun" align="left" style="margin-right: 60px;">
 
 - Clicking on a square on the grid toggles its state
 - <kbd>space</kbd> toggles the flow of time
-- <kbd>⬆</kbd> or <kbd>K</kbd> or <kbd>W</kbd> doubles the rate of time
-- <kbd>⬇</kbd> or <kbd>J</kbd> or <kbd>S</kbd> halfs the rate of time
+- <kbd>↑</kbd> or <kbd>K</kbd> or <kbd>W</kbd> doubles the rate of time
+- <kbd>↓</kbd> or <kbd>J</kbd> or <kbd>S</kbd> halfs the rate of time
 - <kbd>N</kbd> increments time step by one
 - <kbd>P</kbd> decrements time step by one
 - <kbd>C</kbd> clears the grid of any live cells
