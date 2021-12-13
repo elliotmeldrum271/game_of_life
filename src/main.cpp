@@ -28,7 +28,7 @@ void select_color(Color color) {
             glColor3f(0, 0, 0);
             break;
         case BLUE:
-            glColor3f(0, 0, 1);
+            glColor3f(0, .2, 1);
             break;
         case GREY:
             glColor3f(0.3, 0.3, 0.3);
@@ -49,6 +49,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         play = !play;
     } else if (key == GLFW_KEY_N && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
         grid.update();
+    } else if (key == GLFW_KEY_P && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        grid.prev_state();
     }
 }
 

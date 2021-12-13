@@ -1,5 +1,6 @@
 #include <iostream>
 #include "grid.h"
+#include <vector>
 
 
 Grid::Grid() {
@@ -77,11 +78,16 @@ void Grid::update() {
     }
 
     // Update the bit array
-    bool* old_bit_array = bit_array;
+    prev_states.push_back(bit_array);
     bit_array = updated_bit_array;
-    delete[] old_bit_array;  
 }
 
+void Grid::prev_state() {
+    if(prev_states.size() > 0) {
+        bit_array = prev_states[prev_states.size() - 1];
+        prev_states.pop_back();
+    }
+}
 
 Grid::~Grid() {
     delete[] bit_array;
