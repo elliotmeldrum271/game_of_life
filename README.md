@@ -1,7 +1,7 @@
-Conway's Game of Life written in c++
+# Conway's Game of Life written in c++ #
 
 
-# To build and run the Game of Life #
+## To build and run the Game of Life ##
 
 
 From a command prompt in the `game_of_life` directory, run the following commands:
