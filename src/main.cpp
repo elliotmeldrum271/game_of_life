@@ -111,7 +111,7 @@ void display_grid(Grid& grid) {
     bool is_alive;
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLS; j++) {
-            is_alive = grid.get_cell_at(i, j);
+            is_alive = grid.get_cell(i, j);
             if (is_alive) { color = ALIVE_COLOR; }
             else { color = DEAD_COLOR; }
             fill_cell(i, j, color);

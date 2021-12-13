@@ -21,7 +21,7 @@ int Grid::count_neighbors(int i, int j) {
 }
 
 
-bool Grid::get_cell_at(int i, int j) {
+bool Grid::get_cell(int i, int j) {
     return bit_array[i*NUM_COLS + j];
 }
 
