@@ -4,8 +4,8 @@
 
 #include <vector>
 
-const int NUM_ROWS = 50;
-const int NUM_COLS = 50;
+const int NUM_ROWS = 60;
+const int NUM_COLS = 60;
 
 
 class Grid {
