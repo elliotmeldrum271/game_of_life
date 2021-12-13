@@ -16,8 +16,8 @@ class Grid {
         std::vector<bool*> prev_states;
     public:
         Grid();
-        bool get_cell(int i, int j);
-        void set_cell(int i, int j, bool is_alive);
+        bool get_cell(int row, int col);
+        void set_cell(int row, int col, bool is_alive);
         void update();
         void prev_state();
         void clear();

@@ -81,7 +81,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         int row = y_pos / pixels_per_row;
         int col = x_pos / pixels_per_col;
         bool prev_state = grid.get_cell(row+BUF_SIZE, col+BUF_SIZE);
-		std::cout << row << " " << col << std::endl;
         grid.set_cell(row+BUF_SIZE, col+BUF_SIZE, !prev_state);
     }
 }
@@ -161,7 +160,7 @@ int main() {
 
     // Print instructions
     std::cout << "Welcome to Conway's Game of Life." << std::endl;
-    std::cout << "Click on a square to toggle it's state." << std::endl;
+    std::cout << "Click on a square to toggle its state." << std::endl;
     std::cout << "Press the space bar to toggle the flow of time." << std::endl;
     std::cout << "Press the up arrow (or k or w) to double the rate of time." << std::endl;
     std::cout << "Press the down arrow (or j or s) to half the rate of time." << std::endl;
