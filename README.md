@@ -1,7 +1,7 @@
 # Conway's Game of Life #
 
 
-## To build and run the Game of Life ##
+## To build and run this project: ##
 
 
 From a command prompt in the `game_of_life` directory, run the following commands:
