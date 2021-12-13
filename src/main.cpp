@@ -55,7 +55,11 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         grid.prev_state();
     } else if (key == GLFW_KEY_C && (action == GLFW_PRESS)) {
         grid.clear();
-    }
+    } else if (key == GLFW_KEY_U && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        grid.incr_prob();
+    } else if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        grid.decr_prob();
+	}
 }
 
 
@@ -136,8 +140,8 @@ int main() {
         std::cout << "Failed to initialize glfw. Program exiting." << std::endl;
         return -1;
     }
-    int window_width = 500;
-    int window_height = 500;
+    int window_width = 2000;
+    int window_height = 2000;
     GLFWwindow* window = glfwCreateWindow(window_width, window_height, "Game Of Life", NULL, NULL);
     if (!window) {
         std::cout << "Failed to create window. Program exiting." << std::endl;

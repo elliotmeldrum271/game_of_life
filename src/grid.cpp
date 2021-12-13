@@ -1,10 +1,12 @@
 #include <iostream>
 #include "grid.h"
 #include <vector>
+#include <stdlib.h>
 
 
 Grid::Grid() {
     bit_array = new bool[NUM_ROWS * NUM_COLS];
+	probability = 0;
     clear();
 }
 
@@ -73,6 +75,17 @@ void Grid::update() {
         }
     }
 
+	// inject some randomness into the mix
+    for(int i = 0; i < NUM_ROWS; i++) {
+        for(int j = 0; j < NUM_COLS; j++) {
+			int rand_num = rand() % 100;
+			if (rand_num < probability) {
+				updated_bit_array[i*NUM_COLS + j] = true;
+			}
+		}
+	}
+
+
     // Store previous state in prev_states vector
     prev_states.push_back(bit_array);
     // Update the bit array
@@ -96,6 +109,13 @@ void Grid::clear() {
     }
 }
 
+void Grid::incr_prob() {
+	probability++;
+}
+
+void Grid::decr_prob() {
+	probability--;
+}
 Grid::~Grid() {
     delete[] bit_array;
 }
