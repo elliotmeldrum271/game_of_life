@@ -8,8 +8,10 @@
 // Define some global variables
 Grid grid = Grid();
 
-const double ROW_WIDTH = 2.0 / NUM_ROWS;
-const double COL_WIDTH = 2.0 / NUM_COLS;
+const int BUF_SIZE = 5;
+
+const double ROW_WIDTH = 2.0 / (NUM_ROWS-2*BUF_SIZE);
+const double COL_WIDTH = 2.0 / (NUM_COLS-2*BUF_SIZE);
 
 static double time_step = 0.1;
 static bool play = false;
@@ -68,8 +70,8 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
                 int window_width, window_height;
         glfwGetWindowSize(window, &window_width, &window_height);
-        int pixels_per_col = window_width /  NUM_COLS;
-        int pixels_per_row = window_height / NUM_ROWS;
+        int pixels_per_col = window_width /  (NUM_COLS-2*BUF_SIZE);
+        int pixels_per_row = window_height / (NUM_ROWS-2*BUF_SIZE);
 
         // x_pos is the number of pixels from the left
         // y_pos is the number of pixels from the top
@@ -78,8 +80,9 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
         int row = y_pos / pixels_per_row;
         int col = x_pos / pixels_per_col;
-        bool prev_state = grid.get_cell(row, col);
-        grid.set_cell(row, col, !prev_state);
+        bool prev_state = grid.get_cell(row+BUF_SIZE, col+BUF_SIZE);
+		std::cout << row << " " << col << std::endl;
+        grid.set_cell(row+BUF_SIZE, col+BUF_SIZE, !prev_state);
     }
 }
 
@@ -122,7 +125,7 @@ void display_grid(Grid& grid) {
     bool is_alive;
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLS; j++) {
-            is_alive = grid.get_cell(i, j);
+            is_alive = grid.get_cell(i+BUF_SIZE, j+BUF_SIZE);
             if (is_alive) { color = ALIVE_COLOR; }
             else { color = DEAD_COLOR; }
             fill_cell(i, j, color);
