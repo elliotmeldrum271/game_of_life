@@ -10,10 +10,6 @@ class Grid {
         bool* bit_array;
         int count_neighbors(int row, int col);
         bool in_bounds(int row, int col);
-<<<<<<< HEAD
-
-=======
->>>>>>> updated update method
     public:
         Grid();
         bool get_cell(int i, int j);
