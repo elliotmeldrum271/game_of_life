@@ -9,6 +9,7 @@ class Grid {
     private:
         bool* bit_array;
         void set_cell(int i, int j, bool is_alive);
+        int count_neighbors(int i, int j);
     public:
         Grid();
         bool get_cell_at(int i, int j);
