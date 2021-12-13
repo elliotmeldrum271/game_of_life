@@ -8,10 +8,9 @@ const int NUM_COLS = 100;
 class Grid {
     private:
         bool* bit_array;
-<<<<<<< HEAD
-        int count_neighbors(int i, int j);
-=======
->>>>>>> 7aa6bcc07a99a42b1b93ea88c318d32b429160e7
+        int count_neighbors(int row, int col);
+        bool in_bounds(int row, int col);
+
     public:
         Grid();
         bool get_cell(int i, int j);
